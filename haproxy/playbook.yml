@@ -1,6 +1,10 @@
 ---
-- name: Check connectivity to remote servers
-  hosts: all #servergroup01
-  tasks:
-    - name: ping
-      ping:
+- name: Inventory Management Block
+  block:
+    - name: Add the Hosts in Inventory
+      add_host:
+        hostname: '{{item}}'
+        groups: servers
+      loop: "{{ Hostname.split(',') | list}}"
+      register: inmemory_inventory
+  
